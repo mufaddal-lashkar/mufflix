@@ -1,7 +1,8 @@
 import { icons } from "@/constants/icons";
 import { images } from "@/constants/images";
+import * as Font from "expo-font";
 import { Tabs } from "expo-router";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Image, ImageBackground, Text, View } from "react-native";
 
 const TabIcon = ({ focused, icon, title }: any) => {
@@ -24,8 +25,8 @@ const TabIcon = ({ focused, icon, title }: any) => {
     } else {
         return (
             <View className="size-full justify-center items-center mt-4 rounded-full">
-                <Image 
-                    source={icon} 
+                <Image
+                    source={icon}
                     tintColor="#A8B5DB"
                     className="size-5"
                 />
@@ -36,6 +37,18 @@ const TabIcon = ({ focused, icon, title }: any) => {
 }
 
 const _Layout = () => {
+    const [loaded, setLoaded] = useState(false);
+    useEffect(() => {
+        (async () => {
+            await Font.loadAsync({
+                // Key is the fontFamily you'll use in styles or tailwind
+                myfont: require("../../assets/fonts/SpaceMono-Regular.ttf"),
+            });
+            setLoaded(true);
+        })();
+    }, []);
+
+    if (!loaded) return null;
 
     return (
         <Tabs
@@ -56,7 +69,7 @@ const _Layout = () => {
                     position: "absolute",
                     overflow: "hidden",
                     borderWidth: 1,
-                    borderColor: '#0f0D23' 
+                    borderColor: '#0f0D23'
                 }
             }}
         >
